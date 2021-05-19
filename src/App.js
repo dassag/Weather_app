@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 const api={
   key:'05e59341e0bace9c222f7007980df209',
   url:'https://api.openweathermap.org/data/2.5/'
@@ -7,6 +7,12 @@ const api={
 function App() {
 const [query,setQuery]=useState('')
 const[weather,setWeather]=useState({})
+
+const inputRef = useRef('')
+
+useEffect(() => {
+  inputRef.current.focus()
+})
 
 const search= forecast=>{
   if(forecast.key==='Enter'){
@@ -23,6 +29,7 @@ const search= forecast=>{
 
 let date = String(new window.Date())
 date = date.slice(0,15)
+
   return (
     <div className={
       (typeof weather.main!="undefined")?
@@ -32,6 +39,7 @@ date = date.slice(0,15)
         <div className="search-box"> 
           <input 
           type="text" 
+          ref = {inputRef}
           className="search" 
           placeholder="Search your city"
           onChange={e=>setQuery(e.target.value)}
